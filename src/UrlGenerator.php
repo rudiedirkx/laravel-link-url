@@ -7,9 +7,18 @@ use InvalidArgumentException;
 
 class UrlGenerator extends BaseUrlGenerator {
 
+	protected $urlClass = Url::class;
+
+	public function setUrlClass($class) {
+		$this->urlClass = $class;
+	}
+
+
+
 	public function route($name, $parameters = [], $absolute = true) {
 		if ($route = $this->routes->getByName($name)) {
-			return new Url($this->toRoute($route, $parameters, true), $absolute);
+			$class = $this->urlClass;
+			return new $class($this->toRoute($route, $parameters, true), $absolute);
 		}
 
 		throw new InvalidArgumentException("Route [{$name}] not defined.");

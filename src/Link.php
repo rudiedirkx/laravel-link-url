@@ -20,11 +20,11 @@ class Link extends HtmlString {
 		$this->escape = $escape;
 	}
 
-	public function fragment($fragment) {
-		$this->url->fragment($fragment);
 
-		return $this;
-	}
+
+	/**
+	 * LINK properties
+	 */
 
 	public function add($name, $value) {
 		if ($value !== null) {
@@ -46,8 +46,38 @@ class Link extends HtmlString {
 		return $this;
 	}
 
+
+
+	/**
+	 * URL properties
+	 */
+
+	public function fragment($fragment) {
+		$this->url->fragment($fragment);
+
+		return $this;
+	}
+
+	public function query($name, $value) {
+		$this->url->query($name, $value);
+
+		return $this;
+	}
+
+	public function withCsrf() {
+		$this->url->withCsrf();
+
+		return $this;
+	}
+
+
+
+	public function build() {
+		return app('html')->origLink((string) $this->url, $this->title, $this->attributes, $this->secure, $this->escape);
+	}
+
 	public function __toString() {
-		return (string) app('html')->link((string) $this->url, $this->title, $this->attributes, $this->secure, $this->escape);
+		return (string) $this->build();
 	}
 
 }
