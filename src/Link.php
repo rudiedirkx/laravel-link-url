@@ -26,6 +26,12 @@ class Link extends HtmlString implements Urlable {
 	 * LINK properties
 	 */
 
+	public function escape($escape = false) {
+		$this->escape = $escape;
+
+		return $this;
+	}
+
 	public function add($name, $value) {
 		if ($value !== null) {
 			isset($this->attributes[$name]) or $this->attributes[$name] = '';
