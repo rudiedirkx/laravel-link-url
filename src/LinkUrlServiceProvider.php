@@ -20,6 +20,10 @@ class LinkUrlServiceProvider extends ServiceProvider {
 		$this->app->extend('html', function($service, $app) {
 			return new HtmlBuilder($app['url'], $app['view']);
 		});
+
+		$this->app->extend('redirect', function($service, $app) {
+			return new Redirector($app['url'], $app['session.store'] ?? null);
+		});
 	}
 
 	/**

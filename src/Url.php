@@ -2,7 +2,7 @@
 
 namespace rdx\linkurl;
 
-class Url {
+class Url implements Urlable {
 
 	protected $scheme;
 	protected $host;
