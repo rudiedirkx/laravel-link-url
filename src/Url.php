@@ -4,6 +4,7 @@ namespace rdx\linkurl;
 
 class Url implements Urlable {
 
+	protected $absolute;
 	protected $scheme;
 	protected $host;
 	protected $port;
@@ -13,7 +14,9 @@ class Url implements Urlable {
 	protected $query;
 	protected $fragment;
 
-	public function __construct($url) {
+	public function __construct($url, $absolute = true) {
+		$this->absolute = $absolute;
+
 		$parsed = parse_url((string) $url);
 
 		if (isset($parsed['query'])) {
@@ -66,17 +69,27 @@ class Url implements Urlable {
 		}
 	}
 
+	protected function buildOrigin() {
+		if (!$this->absolute) {
+			return '';
+		}
+
+		$scheme = $this->buildScheme();
+		$host = $this->host;
+		$port = $this->port ? ':' . $this->port : '';
+		$user = $this->user;
+		$pass = $this->pass ? ':' . $this->pass  : '';
+		$pass = $user || $pass ? "$pass@" : '';
+
+		return "$scheme$user$pass$host$port";
+	}
+
 	protected function build() {
-		$scheme		= $this->buildScheme();
-		$host		= $this->host;
-		$port		= $this->port ? ':' . $this->port : '';
-		$user		= $this->user;
-		$pass		= $this->pass ? ':' . $this->pass  : '';
-		$pass		= $user || $pass ? "$pass@" : '';
-		$path		= $this->path;
-		$query		= $this->query ? '?' . http_build_query($this->query) : '';
-		$fragment	= $this->fragment ? '#' . $this->fragment : '';
-		return "$scheme$user$pass$host$port$path$query$fragment";
+		$origin = $this->buildOrigin();
+		$path = $this->path;
+		$query = $this->query ? '?' . http_build_query($this->query) : '';
+		$fragment = $this->fragment ? '#' . $this->fragment : '';
+		return "$origin$path$query$fragment";
 	}
 
 	public function __toString() {
