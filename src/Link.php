@@ -82,8 +82,12 @@ class Link extends HtmlString implements Urlable {
 		return app('html')->origLink((string) $this->url, $this->title, $this->attributes, $this->secure, $this->escape);
 	}
 
-	public function __toString() {
+	public function toHtml() {
 		return (string) $this->build();
+	}
+
+	public function __toString() {
+		return $this->toHtml();
 	}
 
 }
