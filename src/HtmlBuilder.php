@@ -22,7 +22,7 @@ class HtmlBuilder extends BaseHtmlBuilder {
 		$url = $this->url->to($url, [], $secure);
 
 		$class = $this->linkClass;
-		return new $class($url, $title, $attributes);
+		return new $class($url, $title, $attributes, $secure, $escape);
 	}
 
 	public function linkRoute($name, $title = null, $parameters = [], $attributes = []) {
