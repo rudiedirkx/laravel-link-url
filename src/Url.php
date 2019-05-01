@@ -4,6 +4,8 @@ namespace rdx\linkurl;
 
 class Url implements Urlable {
 
+	protected $override;
+
 	protected $absolute;
 	protected $scheme;
 	protected $host;
@@ -18,6 +20,10 @@ class Url implements Urlable {
 		$this->absolute = $absolute;
 
 		$parsed = parse_url((string) $url);
+		if (!$parsed) {
+			$this->override = $url ?? '';
+			return;
+		}
 
 		if (isset($parsed['query'])) {
 			parse_str($parsed['query'], $query);
@@ -85,6 +91,10 @@ class Url implements Urlable {
 	}
 
 	protected function build() {
+		if ($this->override !== null) {
+			return $this->override;
+		}
+
 		$origin = $this->buildOrigin();
 		$path = $this->path;
 		$query = $this->query ? '?' . http_build_query($this->query) : '';
