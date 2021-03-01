@@ -25,7 +25,7 @@ class HtmlBuilder extends BaseHtmlBuilder {
 		return new $class($url, $title, $attributes, $secure, $escape);
 	}
 
-	public function linkRoute($name, $title = null, $parameters = [], $attributes = []) {
+	public function linkRoute($name, $title = null, $parameters = [], $attributes = [], $secure = null, $escape = true) {
 		$class = $this->linkClass;
 		return new $class($this->url->route($name, $parameters), $title, $attributes);
 	}
