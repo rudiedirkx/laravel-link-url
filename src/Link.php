@@ -2,9 +2,9 @@
 
 namespace rdx\linkurl;
 
-use Illuminate\Support\HtmlString;
+use Illuminate\Contracts\Support\Htmlable;
 
-class Link implements Urlable {
+class Link implements Urlable, Htmlable {
 
 	protected $url;
 	protected $title;
