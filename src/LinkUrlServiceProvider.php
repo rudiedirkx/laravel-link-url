@@ -3,6 +3,8 @@
 namespace rdx\linkurl;
 
 use Illuminate\Support\ServiceProvider;
+use TwigBridge\Bridge;
+use Twig\Extension\EscaperExtension;
 
 class LinkUrlServiceProvider extends ServiceProvider {
 
@@ -25,6 +27,10 @@ class LinkUrlServiceProvider extends ServiceProvider {
 
 		$this->app->extend('redirect', function($service, $app) {
 			return new Redirector($app['url'], $app['session.store'] ?? null);
+		});
+
+		$this->callAfterResolving('twig', function(Bridge $twig) {
+			$twig->getExtension(EscaperExtension::class)->addSafeClass(Link::class, ['html']);
 		});
 	}
 

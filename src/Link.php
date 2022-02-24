@@ -4,7 +4,7 @@ namespace rdx\linkurl;
 
 use Illuminate\Support\HtmlString;
 
-class Link extends HtmlString implements Urlable {
+class Link implements Urlable {
 
 	protected $url;
 	protected $title;
