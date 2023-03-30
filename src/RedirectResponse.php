@@ -14,10 +14,6 @@ class RedirectResponse extends BaseRedirectResponse implements Urlable {
 		$this->url = new Url($url);
 	}
 
-	public function setTargetUrl($url) {
-		parent::setTargetUrl((string) $url);
-	}
-
 	public function fragment($fragment) {
 		$this->url->fragment($fragment);
 		$this->setTargetUrl((string) $this->url);
