@@ -11,7 +11,7 @@
     ],
     "autoload": {
         "files": [
-            "app/helpers.php"
+            "src/helpers.php"
         ],
         "psr-4": {
             "rdx\\linkurl\\": "src/"
