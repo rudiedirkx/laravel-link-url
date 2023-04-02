@@ -10,9 +10,15 @@
         }
     ],
     "autoload": {
+        "files": [
+            "app/helpers.php"
+        ],
         "psr-4": {
             "rdx\\linkurl\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+    	"illuminate/macroable": "^9.0",
+        "laravelcollective/html": "^6.0"
+    }
 }

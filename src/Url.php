@@ -2,24 +2,24 @@
 
 namespace rdx\linkurl;
 
-class Url implements Urlable {
+class Url {
 
-	protected $override;
+	protected ?string $override = null;
 
-	protected $absolute;
-	protected $scheme;
-	protected $host;
-	protected $port;
-	protected $user;
-	protected $pass;
-	protected $path;
-	protected $query;
-	protected $fragment;
+	protected bool $absolute;
+	protected ?string $scheme = null;
+	protected ?string $host = null;
+	protected ?int $port = null;
+	protected ?string $user = null;
+	protected ?string $pass = null;
+	protected ?string $path = null;
+	protected array $query = [];
+	protected ?string $fragment = null;
 
-	public function __construct($url, $absolute = true) {
+	public function __construct(string $url, bool $absolute = true) {
 		$this->absolute = $absolute;
 
-		$parsed = parse_url((string) $url);
+		$parsed = parse_url($url);
 		if (!$parsed) {
 			$this->override = $url ?? '';
 			return;
@@ -37,18 +37,18 @@ class Url implements Urlable {
 
 
 
-	public function fragment($fragment) {
-		if (trim($fragment) == '') {
-			unset($this->fragment);
+	public function fragment(?string $fragment) {
+		if (strlen($fragment ?? '')) {
+			$this->fragment = $fragment;
 		}
 		else {
-			$this->fragment = $fragment;
+			$this->fragment = null;
 		}
 
 		return $this;
 	}
 
-	public function query($name, $value) {
+	public function query(string $name, ?string $value) {
 		if ($value === null) {
 			unset($this->query[$name]);
 		}
@@ -65,7 +65,7 @@ class Url implements Urlable {
 
 
 
-	protected function buildScheme() {
+	protected function buildScheme() : string {
 		if ($this->scheme) {
 			if ($this->scheme === 'mailto') {
 				return $this->scheme . ':';
@@ -73,9 +73,11 @@ class Url implements Urlable {
 
 			return $this->scheme . '://';
 		}
+
+		return '';
 	}
 
-	protected function buildOrigin() {
+	protected function buildOrigin() : string {
 		if (!$this->absolute) {
 			return '';
 		}
@@ -90,7 +92,7 @@ class Url implements Urlable {
 		return "$scheme$user$pass$host$port";
 	}
 
-	protected function build() {
+	protected function build() : string {
 		if ($this->override !== null) {
 			return $this->override;
 		}
