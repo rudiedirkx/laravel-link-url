@@ -20,5 +20,12 @@
     "require": {
     	"illuminate/macroable": "^9.0",
         "laravelcollective/html": "^6.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "rdx\\linkurl\\LinkUrlServiceProvider"
+            ]
+        }
     }
 }
