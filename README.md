@@ -16,7 +16,7 @@ Which part is a URL component, and which part a custom query param, and which pa
 How?
 ----
 
-Add the service provider:
+Add the service provider (happens automatically):
 
 	rdx\linkurl\LinkUrlServiceProvider::class
 
@@ -25,13 +25,13 @@ Make sure `laravelcollective/html` is installed. It makes links.
 Links, urls and redirects are mutable objects now:
 
 	// Link: <a href="/users/123?report=14#table-reports">View users</a>
-	echo link_to_route('users.show', 'View user', [$user])->query('report', 14)->hash('table-reports');
+	echo linkurl_to_route('users.show', 'View user', [$user])->query('report', 14)->fragment('table-reports');
 
 	// Link: <a href="/reports/123/delete?_token=huy6543gy654" class="delete">x</a>
-	echo link_to_route('reports.delete', 'x', [$report])->set('class', 'delete')->withCsrf();
+	echo linkurl_to_route('reports.delete', 'x', [$report])->add('class', 'delete')->withCsrf();
 
 	// Url: https://example.com/users/123/edit?return=https%3A%2F%2Fexample.com%2Fusers
-	$url = route('users.edit', [$user])->query('return', route('users.index'));
+	$url = routeurl('users.edit', [$user])->query('return', route('users.index'));
 
 	// Redirect: /users/123#table-reports
 	return redirect()->route('users.show', [$user])->fragment('table-reports');
