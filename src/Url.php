@@ -19,9 +19,14 @@ class Url {
 	public function __construct(string $url, bool $absolute = true) {
 		$this->absolute = $absolute;
 
+		if ($url == '#') {
+			$this->override = $url;
+			return;
+		}
+
 		$parsed = parse_url($url);
 		if (!$parsed) {
-			$this->override = $url ?? '';
+			$this->override = $url;
 			return;
 		}
 
