@@ -2,10 +2,12 @@
 
 namespace rdx\linkurl;
 
+use Illuminate\Http\RedirectResponse;
+
 class RedirectResponseMixin {
 
 	public function fragment() {
-		return function(?string $fragment = null) {
+		return function(?string $fragment = null) : RedirectResponse {
 			$url = $this->getTargetUrl();
 			$url = preg_replace('/#.+/', '', $url);
 			if (strlen($fragment ?? '')) {
@@ -18,7 +20,7 @@ class RedirectResponseMixin {
 	}
 
 	public function query() {
-		return function(string $name, string $value) {
+		return function(string $name, string $value) : RedirectResponse {
 			$url = new Url($this->getTargetUrl());
 			$url->query($name, $value);
 			$this->setTargetUrl((string) $url);

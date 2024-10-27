@@ -42,6 +42,7 @@ class Url {
 
 
 
+	/** @return $this */
 	public function fragment(?string $fragment) {
 		if (strlen($fragment ?? '')) {
 			$this->fragment = $fragment;
@@ -53,6 +54,7 @@ class Url {
 		return $this;
 	}
 
+	/** @return $this */
 	public function query(string $name, ?string $value) {
 		if ($value === null) {
 			unset($this->query[$name]);
@@ -64,6 +66,7 @@ class Url {
 		return $this;
 	}
 
+	/** @return $this */
 	public function withCsrf() {
 		return $this->query('_token', csrf_token());
 	}

@@ -11,7 +11,7 @@ class LinkUrlServiceProvider extends ServiceProvider {
 	}
 
 	public function boot() : void {
-        RedirectResponse::mixin(new RedirectResponseMixin());
+		RedirectResponse::mixin(new RedirectResponseMixin());
 	}
 
 }

@@ -29,20 +29,24 @@ class Link implements Htmlable {
 	 * LINK properties
 	 */
 
+	/** @return $this */
 	public function html(bool $html = true) {
 		$this->escape = !$html;
 
 		return $this;
 	}
 
+	/** @return $this */
 	public function blank(bool $blank = true) {
 		return $this->set('target', $blank ? '_blank' : null);
 	}
 
+	/** @return $this */
 	public function class(string $name) {
 		return $this->add('class', $name);
 	}
 
+	/** @return $this */
 	public function add(string $name, ?string $value) {
 		if ($value !== null) {
 			isset($this->attributes[$name]) or $this->attributes[$name] = '';
@@ -52,6 +56,7 @@ class Link implements Htmlable {
 		return $this;
 	}
 
+	/** @return $this */
 	public function set(string $name, ?string $value) {
 		if ($value === null) {
 			unset($this->attributes[$name]);
@@ -69,24 +74,28 @@ class Link implements Htmlable {
 	 * URL properties
 	 */
 
+	/** @return $this */
 	public function secure(bool $secure) {
 		$this->secure = $secure;
 
 		return $this;
 	}
 
+	/** @return $this */
 	public function fragment(?string $fragment) {
 		$this->url->fragment($fragment);
 
 		return $this;
 	}
 
+	/** @return $this */
 	public function query(string $name, ?string $value) {
 		$this->url->query($name, $value);
 
 		return $this;
 	}
 
+	/** @return $this */
 	public function withCsrf() {
 		$this->url->withCsrf();
 
@@ -95,7 +104,7 @@ class Link implements Htmlable {
 
 
 
-	public function toHtml() {
+	public function toHtml() : string {
 		return app('html')->link((string) $this->url, $this->title, $this->attributes, $this->secure, $this->escape);
 	}
 
